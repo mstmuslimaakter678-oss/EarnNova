@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b1020">
+<title>EarnNova18</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:#080d19;color:#fff;min-height:100vh}
+.app{max-width:480px;margin:auto;min-height:100vh;background:linear-gradient(180deg,#111936 0%,#080d19 48%)}
+.header{padding:22px 18px 12px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:24px;font-weight:800}.brand span{color:#65e6a5}
+.profile{width:42px;height:42px;border-radius:50%;background:#1e2a4d;display:grid;place-items:center;font-size:20px}
+.container{padding:10px 16px 90px}
+.card{background:rgba(26,35,62,.9);border:1px solid #2b385d;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.balance{background:linear-gradient(135deg,#173c43,#1a294e)}
+.small{font-size:13px;color:#9ba8c7}.balance h1{font-size:34px;margin:8px 0}.row{display:flex;gap:10px}.row>*{flex:1}
+button{border:0;border-radius:13px;padding:13px 15px;font-weight:700;font-size:14px;cursor:pointer}
+.primary{background:#65e6a5;color:#07130e}.secondary{background:#273555;color:#fff}
+.ad{display:flex;align-items:center;gap:14px}.adicon{width:50px;height:50px;border-radius:15px;background:#26395d;display:grid;place-items:center;font-size:24px}
+.ad h3{font-size:17px;margin-bottom:4px}.ad p{font-size:12px;color:#9ba8c7}
+.section-title{font-size:17px;margin:18px 2px 10px}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menu button{text-align:left;background:#151f39;color:#fff;border:1px solid #293658}
+.menu b{display:block;margin-bottom:4px}.menu span{font-size:11px;color:#9ba8c7;font-weight:400}
+input,select{width:100%;padding:14px;border-radius:12px;border:1px solid #334263;background:#0f1629;color:#fff;margin:7px 0 11px;outline:none}
+label{font-size:12px;color:#aab5cf}
+.notice{font-size:12px;color:#aab5cf;line-height:1.5}
+.hidden{display:none}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);background:#10182c;border-top:1px solid #283453;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px 10px;z-index:10}
+.bottom button{background:none;color:#8f9bb8;padding:7px 2px;font-size:11px}.bottom button.active{color:#65e6a5}
+.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#fff;color:#101827;padding:11px 16px;border-radius:12px;font-size:13px;display:none;z-index:30;box-shadow:0 10px 25px #0006}
+.admin{border-color:#9d75ff;background:linear-gradient(135deg,#211a3d,#161d35)}
+.admin h3{color:#c8aaff}
+.badge{display:inline-block;background:#2c2050;color:#c8aaff;border-radius:20px;padding:4px 8px;font-size:10px;margin-bottom:8px}
+</style>
+  <script src='//libtl.com/sdk.js' data-zone='11979828' data-sdk='show_11979828'></script>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">Earn<span>Nova18</span></div>
+    <div class="profile">👤</div>
+  </header>
+
+  <main class="container">
+    <section id="home">
+      <div class="card balance">
+        <div class="small">Available Balance</div>
+        <h1 id="balance">৳0.00</h1>
+        <div class="row">
+          <button class="primary" onclick="showPage('withdraw')">Withdraw</button>
+          <button class="secondary" onclick="showPage('referral')">Referral</button>
+        </div>
+      </div>
+
+      <div class="section-title">Earn with tasks</div>
+      <div class="card ad">
+        <div class="adicon">📺</div>
+        <div style="flex:1">
+          <h3>Watch Ad & Earn</h3>
+          <p>Complete an available ad to receive the configured reward.</p>
+        </div>
+        <button class="primary" onclick="watchAd()">Watch</button>
+      </div>
+
+      <div class="menu">
+        <button onclick="showPage('tasks')">🎯 <b>Tasks</b><span>Available earning tasks</span></button>
+        <button onclick="dailyBonus()">🎁 <b>Daily Bonus</b><span>Claim your bonus</span></button>
+        <button onclick="showPage('history')">📜 <b>History</b><span>Transactions</span></button>
+        <button onclick="showPage('profile')">👤 <b>Profile</b><span>Your account</span></button>
+      </div>
+
+      <div class="section-title">Referral</div>
+      <div class="card">
+        <div class="small">Invite friends and earn according to your configured referral program.</div>
+        <button class="primary" style="margin-top:12px;width:100%" onclick="showPage('referral')">Open Referral</button>
+      </div>
+    </section>
+
+    <section id="tasks" class="hidden">
+      <div class="section-title">Tasks</div>
+      <div class="card ad">
+        <div class="adicon">📺</div><div style="flex:1"><h3>Watch Ad</h3><p>Monetag integration placeholder.</p></div>
+        <button class="primary" onclick="watchAd()">Open</button>
+      </div>
+      <div class="card notice">Important: connect your approved Monetag ad unit through your backend or approved WebView integration. Do not fake ad views or rewards.</div>
+    </section>
+
+    <section id="withdraw" class="hidden">
+      <div class="section-title">Withdraw</div>
+      <div class="card">
+        <label>Amount</label>
+        <input id="amount" type="number" min="1" placeholder="Enter amount">
+        <label>Payment method</label>
+        <select id="method"><option>bKash</option><option>Nagad</option><option>Rocket</option></select>
+        <label>Account number</label>
+        <input id="account" type="tel" placeholder="01XXXXXXXXX">
+        <button class="primary" style="width:100%;margin-top:4px" onclick="submitWithdrawal()">Submit Withdrawal</button>
+        <p class="notice" style="margin-top:12px">Your request should be processed by the secure backend. This demo does not send real money or messages.</p>
+      </div>
+    </section>
+
+    <section id="referral" class="hidden">
+      <div class="section-title">Referral</div>
+      <div class="card">
+        <div class="small">Your referral link</div>
+        <input id="refLink" readonly value="https://t.me/EarnNova18_Bot?start=ref_demo">
+        <button class="primary" style="width:100%" onclick="copyRef()">Copy Link</button>
+      </div>
+    </section>
+
+    <section id="history" class="hidden">
+      <div class="section-title">Transaction History</div>
+      <div class="card" id="historyBox"><p class="notice">No transactions yet.</p></div>
+    </section>
+
+    <section id="profile" class="hidden">
+      <div class="section-title">Profile</div>
+      <div class="card">
+        <p><b>Telegram User</b></p>
+        <p class="notice" style="margin-top:7px">Connect Telegram WebApp authentication on the server to identify the user securely.</p>
+      </div>
+    </section>
+
+    <!-- ADMIN PANEL: server-side authorization is required. -->
+    <section id="admin" class="hidden">
+      <div class="section-title">Admin Panel</div>
+      <div class="card admin">
+        <span class="badge">ADMIN ONLY</span>
+        <h3>EarnNova18 Control Center</h3>
+        <p class="notice" style="margin-top:8px">This UI is only a placeholder. Real admin authorization must be checked on your backend using your Telegram numeric user ID.</p>
+        <div class="menu" style="margin-top:14px">
+          <button onclick="toast('Connect backend to view users')">👥 <b>Users</b><span>Manage users</span></button>
+          <button onclick="toast('Connect backend to view withdrawals')">💸 <b>Withdrawals</b><span>Review requests</span></button>
+          <button onclick="toast('Connect backend to configure ads')">📺 <b>Ads</b><span>Ad settings</span></button>
+          <button onclick="toast('Connect Telegram/WhatsApp API')">🔔 <b>Notifications</b><span>Telegram & WhatsApp</span></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom">
+    <button class="active" onclick="showPage('home',this)">⌂<br>Home</button>
+    <button onclick="showPage('tasks',this)">◉<br>Tasks</button>
+    <button onclick="showPage('withdraw',this)">৳<br>Withdraw</button>
+    <button onclick="showPage('profile',this)">●<br>Profile</button>
+  </nav>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+let balance = Number(localStorage.getItem('earnNovaBalance') || 0);
+let lastBonus = localStorage.getItem('earnNovaBonus') || '';
+
+function render(){ document.getElementById('balance').textContent='৳'+balance.toFixed(2); }
+function save(){localStorage.setItem('earnNovaBalance',balance.toFixed(2));render();}
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block';
+  clearTimeout(window.__toast); window.__toast=setTimeout(()=>t.style.display='none',2500);
+}
+function showPage(id,btn){
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if(btn){document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function dailyBonus(){
+  const today=new Date().toISOString().slice(0,10);
+  if(lastBonus===today){toast('আজকের bonus ইতিমধ্যে নেওয়া হয়েছে।');return}
+  balance+=1; lastBonus=today; localStorage.setItem('earnNovaBonus',today); save();
+  toast('Daily bonus added: ৳1.00');
+}
+function watchAd(){
+  const adFn = window.show_11979828;
+  if (typeof adFn === 'function') {
+    try {
+      const result = adFn();
+      toast('Ad requested. Reward should be credited only after your backend verifies the ad event.');
+      return result;
+    } catch (e) {
+      toast('Ad could not be opened.');
+      console.error(e);
+      return;
+    }
+  }
+  toast('Ad SDK is not ready yet. Please try again.');
+}
+function submitWithdrawal(){
+  const amount=Number(document.getElementById('amount').value);
+  const method=document.getElementById('method').value;
+  const account=document.getElementById('account').value.trim();
+  if(!amount || amount<=0){toast('সঠিক amount দিন।');return}
+  if(amount>balance){toast('Insufficient balance.');return}
+  if(!account){toast('Account number দিন।');return}
+  balance-=amount; save();
+  const box=document.getElementById('historyBox');
+  box.innerHTML='<p><b>Withdrawal submitted</b></p><p class="notice">৳'+amount.toFixed(2)+' • '+method+' • '+account+'</p>';
+  toast('Withdrawal request submitted.');
+  document.getElementById('amount').value='';document.getElementById('account').value='';
+  showPage('history');
+}
+function copyRef(){
+  navigator.clipboard?.writeText(document.getElementById('refLink').value);
+  toast('Referral link copied.');
+}
+render();
+
+/*
+BACKEND INTEGRATION TODO:
+1. Telegram WebApp initData server-side validation.
+2. Store users/balance/withdrawals in a database.
+3. Verify admin by Telegram numeric user ID on the server.
+4. Send withdrawal notifications through your Telegram Bot API.
+5. Use an approved WhatsApp Business/API provider for WhatsApp notifications.
+6. Insert Monetag's official approved ad integration and validate rewards server-side.
+Never put Telegram bot tokens or WhatsApp API secrets in this HTML file.
+*/
+</script>
+</body>
+</html>
